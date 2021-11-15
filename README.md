@@ -1,7 +1,11 @@
-# Festival Marketplace
+# NFT Ticketing
 
 ### Overview 
-An end-to-end blockchain based platform for festival ticket booking and ticket reselling between trustless parties. This will help to eliminate the current issue with the fake tickets and uncontrolled resale price for the tickets in black market. The platform is build on public Ethereum blockchain network where ERC721 tokens represent festival tickets and these tickets can be purchased using a platform based ERC20 token called FEST.
+An end-to-end blockchain based platform for event ticket booking and ticket reselling between trustless parties. This will help to eliminate the current issue with the fake tickets and uncontrolled resale price for the tickets in black market. The platform is build on public Ethereum blockchain network where ERC721 tokens represent festival tickets and these tickets can be purchased using a platform based ERC20 token called FEST.
+
+
+### Credit
+Credit for most of this repo goes to: https://github.com/ashleshsortee/festival-marketplace/
 
 ### Functionality
 1. An organiser can create a new fest for ticket distribution with specified ticket price and the total supply of tickets for the sale.

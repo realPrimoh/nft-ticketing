@@ -78,8 +78,9 @@ class Festival extends Component {
                 <label class="left">Fest Name</label><input id="name" class="validate" placeholder="Fest Name" type="text" class="validate" name="name" onChange={this.inputChangedHandler} /><br /><br />
                 <label class="left">Fest Symbol</label><input id="symbol" class="validate" placeholder="Fest Symbol" type="text" className="input-control" name="symbol" onChange={this.inputChangedHandler} /><br /><br />
                 <label class="left">Ticket Price</label><input id="price" placeholder="Ticket Price" type="text" className="input-control" name="price" onChange={this.inputChangedHandler} /><br /><br />
-                <label class="left">Total Supply</label><input id="supply" placeholder="Total SUpply" type="text" className="input-control" name="supply" onChange={this.inputChangedHandler}></input><br /><br />
-
+                <label class="left">Total Supply</label><input id="supply" placeholder="Total Supply" type="text" className="input-control" name="supply" onChange={this.inputChangedHandler}></input><br /><br />
+                <label class="left">Commission</label><input id="supply" placeholder="Percent Commission" type="text" className="input-control" name="supply" onChange={this.inputChangedHandler}></input><br /><br />
+                <label class="left">Scalp Protection</label><input id="supply" placeholder="Percent Sell Ratio" type="text" className="input-control" name="supply" onChange={this.inputChangedHandler}></input><br /><br />
                 <button type="submit" className="custom-btn login-btn">Create Festival</button>
               </form>
             </div>

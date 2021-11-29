@@ -77,16 +77,19 @@ Listed under `./client` directory.
 9. Transfer some amount of FEST tokens from organiser to other cutomers using metamask for testing the application.
 10. Set up is completed and now the organiser account will be able to add new festival and customers will be able to purchase/sell the tickets.
 
-### Future Roadmap
-##### Tech debt
+
+#### Feature debt
+1. Add one click login option using metamask and add public and private routes.
+2. Add option to burn the ERC721 token during check in.
+3. Add option to withdraw tickets from sale.
+4. Be able to switch between accounts (customer account can't buy ticket)
+
+
+#### Tech debt
 1. Add clone factory pattern (ERC1167 implementation) for the FestiveTicketsFactory smart contract which uses delegate calls to save the gas cost for the contract deployment.
 2. Reduce the gas consumption for the the bulk minting of tickets. Once solution to do is to modify the openzeppelin's ERC721 contract such that its constructor will be able to directly initialize the required values to its state variables instead of updating the state variable again and again which consumes more gas than operating on memory.
 3. Add unit test cases covering all the scenarios.
 
-##### Feature debt
-1. Add one click login option using metamask and add public and private routes.
-2. Add option to burn the ERC721 token during check in.
-3. Add option to withdraw tickets from sale.
 
 ### Screenshots
 

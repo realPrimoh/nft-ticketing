@@ -24,6 +24,8 @@ contract FestivalNFT is Context, AccessControl, ERC721 {
     uint256[] private ticketsForSale;
     uint256 private _ticketPrice;
     uint256 private _totalSupply;
+    uint256 private _commission;
+    uint256 private _maxSell;
 
     mapping(uint256 => TicketDetails) private _ticketDetails;
     mapping(address => uint256[]) private purchasedTickets;
@@ -33,6 +35,8 @@ contract FestivalNFT is Context, AccessControl, ERC721 {
         string memory FestSymbol,
         uint256 ticketPrice,
         uint256 totalSupply,
+        uint256 commission,
+        uint256 maxSell,
         address organiser
     ) public ERC721(festName, FestSymbol) {
         _setupRole(MINTER_ROLE, organiser);
@@ -40,6 +44,8 @@ contract FestivalNFT is Context, AccessControl, ERC721 {
         _ticketPrice = ticketPrice;
         _totalSupply = totalSupply;
         _organiser = organiser;
+        _commission = commission;
+        _maxSell = maxSell;
     }
 
     modifier isValidTicketCount {
@@ -63,7 +69,7 @@ contract FestivalNFT is Context, AccessControl, ERC721 {
         uint256 sellingPrice = _ticketDetails[ticketId].sellingPrice;
 
         require(
-            purchasePrice + ((purchasePrice * 110) / 100) > sellingPrice,
+            purchasePrice + ((purchasePrice * _maxSell) / 100) > sellingPrice,
             "Re-selling price is more than 110%"
         );
         _;
@@ -181,7 +187,7 @@ contract FestivalNFT is Context, AccessControl, ERC721 {
         uint256 purchasePrice = _ticketDetails[ticketId].purchasePrice;
 
         require(
-            purchasePrice + ((purchasePrice * 110) / 100) > sellingPrice,
+            purchasePrice + ((purchasePrice * _maxSell) / 100) > sellingPrice,
             "Re-selling price is more than 110%"
         );
 
@@ -205,6 +211,11 @@ contract FestivalNFT is Context, AccessControl, ERC721 {
     function getTicketPrice() public view returns (uint256) {
         return _ticketPrice;
     }
+
+    function getCommission()  public view returns (uint256) {
+        return _commission;        
+    }
+
 
     // Get organiser's address
     function getOrganiser() public view returns (address) {

@@ -24,7 +24,9 @@ contract FestiveTicketsFactory is Ownable {
         string memory festName,
         string memory festSymbol,
         uint256 ticketPrice,
-        uint256 totalSupply
+        uint256 totalSupply,
+        uint256 commission,
+        uint256 maxSell
     ) public onlyOwner returns (address) {
         FestivalNFT newFest =
             new FestivalNFT(
@@ -32,6 +34,8 @@ contract FestiveTicketsFactory is Ownable {
                 festSymbol,
                 ticketPrice,
                 totalSupply,
+                commission,
+                maxSell,
                 msg.sender
             );
 

@@ -31,7 +31,7 @@ contract FestivalMarketplace {
         address seller = _festival.ownerOf(ticketId);
         address buyer = msg.sender;
         uint256 sellingPrice = _festival.getSellingPrice(ticketId);
-        uint256 commision = (sellingPrice * 10) / 100;
+        uint256 commision = (sellingPrice * _festival.getCommission()) / 100;
 
         _token.transferFrom(buyer, seller, sellingPrice - commision);
         _token.transferFrom(buyer, _organiser, commision);

@@ -15,7 +15,9 @@ class Festival extends Component {
       name: null,
       symbol: null,
       price: null,
-      suppply: null,
+      supply: null,
+      commission: null,
+      scalp_protection: null,
     };
 
     web3 = new Web3(window.ethereum);
@@ -26,13 +28,15 @@ class Festival extends Component {
       e.preventDefault();
 
       const organiser = await web3.eth.getCoinbase();
-      const { name, symbol, price, supply } = this.state;
+      const { name, symbol, price, supply, commission, scalp_protection } = this.state;
       const { events: { Created: { returnValues: { ntfAddress, marketplaceAddress } } } } = await festivalFactory.methods.createNewFest(
         festToken._address,
         name,
         symbol,
         web3.utils.toWei(price, 'ether'),
-        supply
+        supply,
+        commission,
+        scalp_protection
       ).send({ from: organiser, gas: 6700000 });
 
       renderNotification('success', 'Success', `Festival Created Successfully!`);
@@ -79,8 +83,8 @@ class Festival extends Component {
                 <label class="left">Fest Symbol</label><input id="symbol" class="validate" placeholder="Fest Symbol" type="text" className="input-control" name="symbol" onChange={this.inputChangedHandler} /><br /><br />
                 <label class="left">Ticket Price</label><input id="price" placeholder="Ticket Price" type="text" className="input-control" name="price" onChange={this.inputChangedHandler} /><br /><br />
                 <label class="left">Total Supply</label><input id="supply" placeholder="Total Supply" type="text" className="input-control" name="supply" onChange={this.inputChangedHandler}></input><br /><br />
-                <label class="left">Commission</label><input id="supply" placeholder="Percent Commission" type="text" className="input-control" name="supply" onChange={this.inputChangedHandler}></input><br /><br />
-                <label class="left">Scalp Protection</label><input id="supply" placeholder="Percent Sell Ratio" type="text" className="input-control" name="supply" onChange={this.inputChangedHandler}></input><br /><br />
+                <label class="left">Commission</label><input id="commission" placeholder="Percent Commission" type="text" className="input-control" name="commission" onChange={this.inputChangedHandler}></input><br /><br />
+                <label class="left">Scalp Protection</label><input id="scalp_protection" placeholder="Percent Sell Ratio" type="text" className="input-control" name="scalp_protection" onChange={this.inputChangedHandler}></input><br /><br />
                 <button type="submit" className="custom-btn login-btn">Create Festival</button>
               </form>
             </div>

@@ -3,6 +3,17 @@ import Web3 from 'web3';
 import festivalFactory from '../proxies/FestivalFactory';
 import FestivalNFT from '../proxies/FestivalNFT';
 import renderNotification from '../utils/notification-handler';
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  Text
+} from '@chakra-ui/react';
 
 let web3;
 
@@ -56,9 +67,10 @@ class MyTickets extends Component {
 
       this.setState({ fests: renderData, fest: activeFests[0], marketplace: festDetails[4] });
       this.updateTickets();
+      console.log('state fests:', renderData);
     } catch (err) {
-      renderNotification('danger', 'Error', 'Error while updating the fetivals');
-      console.log('Error while updating the fetivals', err);
+      renderNotification('danger', 'Error', 'Error while updating the festivals');
+      console.log('Error while updating the festivals', err);
     }
   }
 
@@ -72,6 +84,7 @@ class MyTickets extends Component {
       ));
 
       this.setState({ tickets: renderData, ticket: tickets[0] });
+      console.log('state tickets:', renderData);
     } catch (err) {
       renderNotification('danger', 'Error', 'Error in updating the ticket for festival');
       console.log('Error in updating the ticket', err);
@@ -110,34 +123,46 @@ class MyTickets extends Component {
   render() {
     return (
       <div class="container center" >
-        <div class="row">
-          <div class="container ">
-            <div class="container ">
-              <h5 style={{ padding: "30px 0px 0px 10px" }}>My Tickets</h5>
-              <form class="" onSubmit={this.onListForSale}>
+        <div class="container">
+          <Text fontSize='4xl' style={{ padding: "30px 0px 0px 10px" }}>My Tickets</Text>
+          <Table variant='simple'>
+            <Thead>
+              <Tr>
+                <Th>Festival</Th>
+                <Th>Ticket ID</Th>
+                <Th>Actions</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr>
+                <Td>Coachella (Placeholder)</Td>
+                <Td>dk39s9832093kx</Td>
+                <Td>-></Td>
+              </Tr>
+            </Tbody>
+          </Table>
+          <form class="" onSubmit={this.onListForSale}>
 
-                <label class="left">Festival</label>
-                <select className="browser-default" name='fest' value={this.state.fest || undefined} onChange={this.onFestivalChangeHandler}>
-                  <option value="" disabled >Select Festival</option>
-                  {this.state.fests}
-                </select><br /><br />
+            <label class="left">Festival</label>
+            <select className="browser-default" name='fest' value={this.state.fest || undefined} onChange={this.onFestivalChangeHandler}>
+              <option value="" disabled >Select Festival</option>
+              {this.state.fests}
+            </select><br /><br />
 
-                <label class="left">Ticket Id</label>
-                <select className="browser-default" name='ticket' value={this.state.ticket || undefined} onChange={this.selectHandler}>
-                  <option value="" disabled>Select Ticket</option>
-                  {this.state.tickets}
-                </select><br /><br />
+            <label class="left">Ticket Id</label>
+            <select className="browser-default" name='ticket' value={this.state.ticket || undefined} onChange={this.selectHandler}>
+              <option value="" disabled>Select Ticket</option>
+              {this.state.tickets}
+            </select><br /><br />
 
-                <label class="left">Sale Price</label><input id="price" placeholder="Sale Price" type="text" className="input-control" name="price" onChange={this.inputChangedHandler} /><br /><br />
+            <label class="left">Sale Price</label><input id="price" placeholder="Sale Price" type="text" className="input-control" name="price" onChange={this.inputChangedHandler} /><br /><br />
 
-                <button type="submit" className="custom-btn login-btn">List for Sale</button>
-              </form>
-            </div>
-          </div>
+            <button type="submit" className="custom-btn login-btn">List for Sale</button>
+          </form>
         </div>
       </div >
     )
   }
 }
 
-export default MyTickets;  
+export default MyTickets;

@@ -94,8 +94,8 @@ class SecondaryMarket extends Component {
 
       this.setState({ fests: renderData, fest: activeFests[0], marketplace: festDetails[4], festName: festDetails[0] });
     } catch (err) {
-      renderNotification('danger', 'Error', 'Error while updating the fetivals');
-      console.log('Error while updating the fetivals', err);
+      renderNotification('danger', 'Error', 'Error while updating the festivals');
+      console.log('Error while updating the festivals', err);
     }
   }
 

@@ -14,10 +14,10 @@ class Festival extends Component {
     super();
 
     this.state = {
-      name: null,
-      symbol: null,
-      price: null,
-      supply: null,
+      name: '',
+      symbol: '',
+      price: '',
+      supply: '',
       commission: 20,
       scalp_protection: 150,
     };
@@ -76,36 +76,39 @@ class Festival extends Component {
   render() {
     return (
       <div class="container center" >
-        <div class="row">
-          <div class="container">
-            <div class="container">
+          <div class="container" style={{backgroundColor: '#F5F8FA', backgroundOpacity: 0.5, marginTop: 40, boxShadow: '0px 10px 10px #888888', width: '50%', border: '1px solid black', padding: 30, paddingTop: 20, borderRadius: 10}}>
             <Text fontSize='4xl' padding={18}>Add New Festival</Text>
-            <Text mb='8px'>Festival Name</Text>
-              <Input placeholder='Festival Name' value={this.state.name} onChange={(event) => this.setState({name: event.target.value})} />
+            {this.state.name && <Text mb='8px'>Festival Name</Text>}
+              <Input style={styles.input} placeholder='Festival Name' value={this.state.name} onChange={(event) => this.setState({name: event.target.value})} />
 
-              <Text mb='8px'>Festival Ticker Symbol</Text>
-              <Input placeholder='Festival Ticker Symbol' value={this.state.symbol}  onChange={(event) => this.setState({symbol: event.target.value})} />
+              {this.state.symbol && <Text mb='8px'>Festival Ticker Symbol</Text>}
+              <Input style={styles.input} placeholder='Festival Ticker Symbol' value={this.state.symbol}  onChange={(event) => this.setState({symbol: event.target.value})} />
 
-              <Text mb='8px'>Ticket Price</Text>
-              <Input placeholder='Ticket Price' value={this.state.price}  onChange={(event) => this.setState({price: event.target.value})} />
+              {this.state.price && <Text mb='8px'>Ticket Price</Text>}
+              <Input style={styles.input} placeholder='Ticket Price' value={this.state.price}  onChange={(event) => this.setState({price: event.target.value})} />
 
-              <Text mb='8px'>Total Ticket Amount</Text>
-              <Input placeholder='Total Ticket Amount' value={this.state.supply}  onChange={(event) => this.setState({supply: event.target.value})} />
+              {this.state.supply && <Text mb='8px'>Total Ticket Amount</Text>}
+              <Input style={styles.input} placeholder='Total Ticket Amount' value={this.state.supply}  onChange={(event) => this.setState({supply: event.target.value})} />
 
-              <Text mb='8px'>Commission (%)</Text>
-              <Input placeholder='Commission (%)' value={this.state.commission}  onChange={(event) => this.setState({commission: event.target.value})} />
+              {this.state.commission && <Text mb='8px'>Commission (%)</Text>}
+              <Input style={styles.input} placeholder='Commission (%)' value={this.state.commission}  onChange={(event) => this.setState({commission: event.target.value})} />
 
-              <Text mb='8px'>Maximum Resale Price (%)</Text>
-              <Input placeholder='Maximum Resale Price (%)' value={this.state.scalp_protection}  onChange={(event) => this.setState({scalp_protection: event.target.value})} />
-              <Button colorScheme='teal' size='lg' marginTop={10} onClick={() => this.onCreateFestival()}>
+              {this.state.scalp_protection && <Text mb='8px'>Maximum Resale Price (%)</Text>}
+              <Input style={styles.input} placeholder='Maximum Resale Price (%)' value={this.state.scalp_protection}  onChange={(event) => this.setState({scalp_protection: event.target.value})} />
+              <Button colorScheme='teal' size='lg' marginTop={10} onClick={(e) => this.onCreateFestival(e)}>
                 Add Festival
               </Button>
-            </div>
           </div>
-        </div>
       </div >
     )
   }
 }
+
+const styles = {
+  input: {
+    textAlign: 'center',
+    marginBottom: 35,
+  }
+};
 
 export default Festival;

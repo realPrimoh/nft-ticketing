@@ -11,19 +11,29 @@ class App extends Component {
 
   constructor() {
     super();
+    this.state = {
+      account: null
+    }
 
     new Promise((resolve, reject) => {
       if (typeof window.ethereum !== 'undefined') {
         const web3 = new Web3(window.ethereum);
         window.ethereum.enable()
           .then(() => {
+            let web = new Web3(window.ethereum);
             resolve(
-              new Web3(window.ethereum)
+              web
             );
           })
           .catch(e => {
             reject(e);
           });
+        web3.eth.getCoinbase().then((val) => {
+          this.setState({account: val.substr(0,5)});
+          // this.state.account = val;
+          web3.eth.getBalance(val).then(c => console.log('balance', c));
+        })
+        
         return;
       }
       if (typeof window.web3 !== 'undefined') {
@@ -55,6 +65,7 @@ class App extends Component {
                   <li> <Link to="/market">Ticket Resale</Link> </li>
                   <li> <Link to="/tickets">My Tickets</Link> </li>
                   <li >
+                    You're logged in as: {this.state.account}...
                   </li>
                 </div>
 

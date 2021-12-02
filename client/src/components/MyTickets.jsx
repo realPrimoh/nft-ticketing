@@ -56,6 +56,7 @@ class MyTickets extends Component {
 
       this.setState({ fests: renderData, fest: activeFests[0], marketplace: festDetails[4] });
       this.updateTickets();
+      console.log('fests', activeFests);
     } catch (err) {
       renderNotification('danger', 'Error', 'Error while updating the fetivals');
       console.log('Error while updating the fetivals', err);
@@ -72,6 +73,7 @@ class MyTickets extends Component {
       ));
 
       this.setState({ tickets: renderData, ticket: tickets[0] });
+      console.log('tickets', tickets);
     } catch (err) {
       renderNotification('danger', 'Error', 'Error in updating the ticket for festival');
       console.log('Error in updating the ticket', err);

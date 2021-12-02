@@ -52,7 +52,7 @@ class App extends Component {
                 <div>
                   <li> <Link to="/createFestival">Add Festival</Link> </li>
                   <li> <Link to="/buyTickets">Buy Tickets</Link> </li>
-                  <li> <Link to="/market">Secondary Market</Link> </li>
+                  <li> <Link to="/market">Ticket Resale</Link> </li>
                   <li> <Link to="/tickets">My Tickets</Link> </li>
                   <li >
                   </li>

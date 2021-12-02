@@ -72,7 +72,7 @@ class SecondaryMarket extends Component {
       await marketplaceInstance.methods.secondaryPurchase(ticketId).send({ from: initiator, gas: 6700000 });
       await this.updateTickets()
 
-      renderNotification('success', 'Success', 'Ticket purchased for the festival successfully!');
+      renderNotification('success', 'Success', 'Ticket purchased for the event successfully!');
     } catch (err) {
       renderNotification('danger', 'Error', err.message);
       console.log('Error while purchasing the ticket', err);
@@ -84,6 +84,9 @@ class SecondaryMarket extends Component {
     try {
       const initiator = await web3.eth.getCoinbase();
       const activeFests = await festivalFactory.methods.getActiveFests().call({ from: initiator });
+      if (activeFests.length == 0) {
+        return;
+      }
       const festDetails = await festivalFactory.methods.getFestDetails(activeFests[0]).call({ from: initiator });
       const renderData = await Promise.all(activeFests.map(async (fest, i) => {
         const festDetails = await festivalFactory.methods.getFestDetails(activeFests[i]).call({ from: initiator });
@@ -94,7 +97,7 @@ class SecondaryMarket extends Component {
 
       this.setState({ fests: renderData, fest: activeFests[0], marketplace: festDetails[4], festName: festDetails[0] });
     } catch (err) {
-      renderNotification('danger', 'Error', 'Error while updating the fetivals');
+      renderNotification('danger', 'Error', 'Error while updating the events');
       console.log('Error while updating the fetivals', err);
     }
   }
@@ -126,11 +129,11 @@ class SecondaryMarket extends Component {
           <div class="container ">
             <div class="container ">
 
-              <h5 style={{ padding: "30px 0px 0px 10px" }}>Secondary Marketplace</h5>
+              <h5 style={{ padding: "30px 0px 0px 10px" }}>Ticket Resales</h5>
 
-              <label class="left">Festival</label>
+              <label class="left">Event</label>
               <select className="browser-default" name='fest' value={this.state.fest || undefined} onChange={this.onFestivalChangeHandler}>
-                <option value="" disabled >Select Festival</option>
+                <option value="" disabled >Select Event</option>
                 {this.state.fests}
               </select><br /><br />
 
@@ -139,9 +142,9 @@ class SecondaryMarket extends Component {
               <table id='requests' class="responsive-table striped" >
                 <thead>
                   <tr>
-                    <th key='name' class="center">Fest Name</th>
-                    <th key='ticketId' class="center">Ticket Id</th>
-                    <th key='cost' class="center">Cost(in FEST)</th>
+                    <th key='name' class="center">Event Name</th>
+                    <th key='ticketId' class="center">Ticket ID</th>
+                    <th key='cost' class="center">Price ($TCKT)</th>
                     <th key='purchase' class="center">Purchase</th>
                   </tr>
                 </thead>

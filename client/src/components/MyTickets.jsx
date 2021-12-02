@@ -18,6 +18,8 @@ class MyTickets extends Component {
       marketplace: null,
       price: null,
       test: null,
+      activeFests: [],
+      festData: []
     };
 
     web3 = new Web3(window.ethereum);
@@ -44,21 +46,30 @@ class MyTickets extends Component {
 
   updateFestivals = async () => {
     try {
+      let festData = []
       const initiator = await web3.eth.getCoinbase();
       const activeFests = await festivalFactory.methods.getActiveFests().call({ from: initiator });
+      if (activeFests.length == 0) {
+        return;
+      }
       const festDetails = await festivalFactory.methods.getFestDetails(activeFests[0]).call({ from: initiator });
       const renderData = await Promise.all(activeFests.map(async (fest, i) => {
         const festDetails = await festivalFactory.methods.getFestDetails(activeFests[i]).call({ from: initiator });
+        const nftInstance = await FestivalNFT(fest);
+        const tickets = await nftInstance.methods.getTicketsOfCustomer(initiator).call({ from: initiator });
+        for (let id = 0; id < tickets.length; id++) {
+          festData.push([festDetails[0], tickets[id], '']);
+        }
         return (
           <option key={fest} value={fest} >{festDetails[0]}</option>
         )
       }));
 
-      this.setState({ fests: renderData, fest: activeFests[0], marketplace: festDetails[4] });
+      this.setState({ fests: renderData, fest: activeFests[0], marketplace: festDetails[4], festData });
       this.updateTickets();
-      console.log('fests', activeFests);
+      console.log('fests', festDetails);
     } catch (err) {
-      renderNotification('danger', 'Error', 'Error while updating the fetivals');
+      // renderNotification('danger', 'Error', 'Error while updating the festivals');
       console.log('Error while updating the fetivals', err);
     }
   }
@@ -116,7 +127,29 @@ class MyTickets extends Component {
           <div class="container ">
             <div class="container ">
               <h5 style={{ padding: "30px 0px 0px 10px" }}>My Tickets</h5>
-              <form class="" onSubmit={this.onListForSale}>
+              <table id='requests' class="responsive-table striped" style={{marginBottom: 30}}>
+                <thead>
+                  <tr>
+                    <th key='name' class="center">Event Name</th>
+                    <th key='left' class="center">Ticket ID</th>
+                    {/* <th key='price' class="center">Listing Price</th> */}
+                    <th key='purchase' class="center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody class="striped highlight">
+                  {this.state.festData.map((festList) => {
+                    return(
+                    <tr>
+                      <th class="center">{festList[0]}</th>
+                      <th class="center">{festList[1]}</th>
+                      {/* <th class="center"><input id="price" placeholder="Sale Price" type="text" className="input-control" name="price" onChange={this.inputChangedHandler} /></th> */}
+                      <th class="center"><button type="submit" className="custom-btn login-btn">Resell</button></th>
+                    </tr>)
+                  })}
+                  {console.log('festNames', this.state.festNames)}
+                </tbody>
+              </table>
+              {/* <form class="" onSubmit={this.onListForSale}>
 
                 <label class="left">Festival</label>
                 <select className="browser-default" name='fest' value={this.state.fest || undefined} onChange={this.onFestivalChangeHandler}>
@@ -133,7 +166,7 @@ class MyTickets extends Component {
                 <label class="left">Sale Price</label><input id="price" placeholder="Sale Price" type="text" className="input-control" name="price" onChange={this.inputChangedHandler} /><br /><br />
 
                 <button type="submit" className="custom-btn login-btn">List for Sale</button>
-              </form>
+              </form> */}
             </div>
           </div>
         </div>
@@ -142,4 +175,4 @@ class MyTickets extends Component {
   }
 }
 
-export default MyTickets;  
+export default MyTickets;

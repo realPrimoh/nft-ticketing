@@ -77,15 +77,15 @@ class Festival extends Component {
         <div class="row">
           <div class="container ">
             <div class="container ">
-              <h5 style={{ padding: "30px 0px 0px 10px" }}>Create New Festival</h5>
+              <h5 style={{ padding: "30px 0px 0px 10px" }}>Create New Event</h5>
               <form class="" onSubmit={this.onCreateFestival}>
-                <label class="left">Festival Name</label><input id="name" class="validate" placeholder="Fest Name" type="text" class="validate" name="name" onChange={this.inputChangedHandler} /><br /><br />
-                <label class="left">Festival Ticker</label><input id="symbol" class="validate" placeholder="Fest Symbol" type="text" className="input-control" name="symbol" onChange={this.inputChangedHandler} /><br /><br />
+                <label class="left">Event Name</label><input id="name" class="validate" placeholder="Event Name" type="text" class="validate" name="name" onChange={this.inputChangedHandler} /><br /><br />
+                <label class="left">Event Ticker</label><input id="symbol" class="validate" placeholder="Event Symbol" type="text" className="input-control" name="symbol" onChange={this.inputChangedHandler} /><br /><br />
                 <label class="left">Ticket Price</label><input id="price" placeholder="Ticket Price" type="text" className="input-control" name="price" onChange={this.inputChangedHandler} /><br /><br />
                 <label class="left">Total Supply</label><input id="supply" placeholder="Total Supply" type="text" className="input-control" name="supply" onChange={this.inputChangedHandler}></input><br /><br />
                 <label class="left">Commission</label><input id="commission" placeholder="Percent Commission" type="text" className="input-control" name="commission" onChange={this.inputChangedHandler}></input><br /><br />
                 <label class="left">Scalp Protection</label><input id="scalp_protection" placeholder="Percent Sell Ratio" type="text" className="input-control" name="scalp_protection" onChange={this.inputChangedHandler}></input><br /><br />
-                <button type="submit" className="custom-btn login-btn">Create Festival</button>
+                <button type="submit" className="custom-btn login-btn">Create Event</button>
               </form>
             </div>
           </div>

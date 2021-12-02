@@ -28,8 +28,9 @@ class App extends Component {
           .catch(e => {
             reject(e);
           });
+          
         web3.eth.getCoinbase().then((val) => {
-          this.setState({account: val.substr(0,5)});
+          this.setState({account: val?.substr(0,5)});
           // this.state.account = val;
           web3.eth.getBalance(val).then(c => console.log('balance', c));
         })
@@ -60,9 +61,9 @@ class App extends Component {
               <a href="/buyTickets" class="brand-logo left">NFTicketmaster</a>
               <ul class="right hide-on-med-and-down 10" >
                 <div>
-                  <li> <Link to="/createFestival">Add Festival</Link> </li>
+                  <li> <Link to="/createEvent">Create Event</Link> </li>
                   <li> <Link to="/buyTickets">Buy Tickets</Link> </li>
-                  <li> <Link to="/market">Ticket Resale</Link> </li>
+                  <li> <Link to="/resale">Ticket Resale</Link> </li>
                   <li> <Link to="/tickets">My Tickets</Link> </li>
                   <li >
                     You're logged in as: {this.state.account}...
@@ -74,9 +75,9 @@ class App extends Component {
           </nav>
 
           <Switch>
-            <Route path="/createFestival" component={Festival} />
+            <Route path="/createEvent" component={Festival} />
             <Route path="/buyTickets" component={Purchase} />
-            <Route path="/market" component={SecondaryMarket} />
+            <Route path="/resale" component={SecondaryMarket} />
             <Route path="/tickets" component={MyTickets} />
           </Switch>
         </div>

@@ -4,8 +4,10 @@ import festivalFactory from '../proxies/FestivalFactory';
 import festToken from '../proxies/FestToken';
 import FestivalNFT from '../proxies/FestivalNFT';
 import renderNotification from '../utils/notification-handler';
+import { Input, Button, Text } from '@chakra-ui/react'
 
 let web3;
+const DEFAULT_GAS = 64209;
 
 class Festival extends Component {
   constructor() {
@@ -37,7 +39,7 @@ class Festival extends Component {
         supply,
         commission,
         scalp_protection
-      ).send({ from: organiser, gas: 6700000 });
+      ).send({ from: organiser, gas: DEFAULT_GAS });
 
       renderNotification('success', 'Success', `Festival Created Successfully!`);
 
@@ -48,7 +50,7 @@ class Festival extends Component {
       let prevCount = 0
 
       if (supply < 30) {
-        const res = await nftInstance.methods.bulkMintTickets(supply, marketplaceAddress).send({ from: organiser, gas: 6700000 });
+        const res = await nftInstance.methods.bulkMintTickets(supply, marketplaceAddress).send({ from: organiser, gas: DEFAULT_GAS });
       } else {
         for (let i = 0; i < batches; i++) {
           prevCount = curCount;
@@ -56,7 +58,7 @@ class Festival extends Component {
           if (supply < curCount) {
             batchSupply = supply - prevCount;
           }
-          const res = await nftInstance.methods.bulkMintTickets(batchSupply, marketplaceAddress).send({ from: organiser, gas: 6700000 });
+          const res = await nftInstance.methods.bulkMintTickets(batchSupply, marketplaceAddress).send({ from: organiser, gas: DEFAULT_GAS });
         }
       }
     } catch (err) {
@@ -75,18 +77,29 @@ class Festival extends Component {
     return (
       <div class="container center" >
         <div class="row">
-          <div class="container ">
-            <div class="container ">
-              <h5 style={{ padding: "30px 0px 0px 10px" }}>Create New Festival</h5>
-              <form class="" onSubmit={this.onCreateFestival}>
-                <label class="left">Fest Name</label><input id="name" class="validate" placeholder="Fest Name" type="text" class="validate" name="name" onChange={this.inputChangedHandler} /><br /><br />
-                <label class="left">Fest Symbol</label><input id="symbol" class="validate" placeholder="Fest Symbol" type="text" className="input-control" name="symbol" onChange={this.inputChangedHandler} /><br /><br />
-                <label class="left">Ticket Price</label><input id="price" placeholder="Ticket Price" type="text" className="input-control" name="price" onChange={this.inputChangedHandler} /><br /><br />
-                <label class="left">Total Supply</label><input id="supply" placeholder="Total Supply" type="text" className="input-control" name="supply" onChange={this.inputChangedHandler}></input><br /><br />
-                <label class="left">Commission</label><input id="commission" placeholder="Percent Commission" type="text" className="input-control" name="commission" onChange={this.inputChangedHandler}></input><br /><br />
-                <label class="left">Scalp Protection</label><input id="scalp_protection" placeholder="Percent Sell Ratio" type="text" className="input-control" name="scalp_protection" onChange={this.inputChangedHandler}></input><br /><br />
-                <button type="submit" className="custom-btn login-btn">Create Festival</button>
-              </form>
+          <div class="container">
+            <div class="container">
+            <Text fontSize='4xl' padding={18}>Add New Festival</Text>
+            <Text mb='8px'>Festival Name</Text>
+              <Input placeholder='Festival Name' value={this.state.name} onChange={(event) => this.setState({name: event.target.value})} />
+
+              <Text mb='8px'>Festival Ticker Symbol</Text>
+              <Input placeholder='Festival Ticker Symbol' value={this.state.symbol}  onChange={(event) => this.setState({symbol: event.target.value})} />
+
+              <Text mb='8px'>Ticket Price</Text>
+              <Input placeholder='Ticket Price' value={this.state.price}  onChange={(event) => this.setState({price: event.target.value})} />
+
+              <Text mb='8px'>Total Ticket Amount</Text>
+              <Input placeholder='Total Ticket Amount' value={this.state.supply}  onChange={(event) => this.setState({supply: event.target.value})} />
+
+              <Text mb='8px'>Commission (%)</Text>
+              <Input placeholder='Commission (%)' value={this.state.commission}  onChange={(event) => this.setState({commission: event.target.value})} />
+
+              <Text mb='8px'>Maximum Resale Price (%)</Text>
+              <Input placeholder='Maximum Resale Price (%)' value={this.state.scalp_protection}  onChange={(event) => this.setState({scalp_protection: event.target.value})} />
+              <Button colorScheme='teal' size='lg' marginTop={10} onClick={() => this.onCreateFestival()}>
+                Add Festival
+              </Button>
             </div>
           </div>
         </div>

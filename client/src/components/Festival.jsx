@@ -16,8 +16,8 @@ class Festival extends Component {
       symbol: null,
       price: null,
       supply: null,
-      commission: null,
-      scalp_protection: null,
+      commission: 20,
+      scalp_protection: 150,
     };
 
     web3 = new Web3(window.ethereum);
@@ -77,7 +77,7 @@ class Festival extends Component {
         <div class="row">
           <div class="container ">
             <div class="container ">
-              <h5 style={{ padding: "30px 0px 0px 10px" }}>Create new Festival</h5>
+              <h5 style={{ padding: "30px 0px 0px 10px" }}>Create New Festival</h5>
               <form class="" onSubmit={this.onCreateFestival}>
                 <label class="left">Fest Name</label><input id="name" class="validate" placeholder="Fest Name" type="text" class="validate" name="name" onChange={this.inputChangedHandler} /><br /><br />
                 <label class="left">Fest Symbol</label><input id="symbol" class="validate" placeholder="Fest Symbol" type="text" className="input-control" name="symbol" onChange={this.inputChangedHandler} /><br /><br />

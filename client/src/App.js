@@ -11,10 +11,13 @@ class App extends Component {
 
   constructor() {
     super();
-
+    this.web3 = null;
+    this.state = {
+      organizer: null,
+    }
     new Promise((resolve, reject) => {
       if (typeof window.ethereum !== 'undefined') {
-        const web3 = new Web3(window.ethereum);
+        this.web3 = new Web3(window.ethereum);
         window.ethereum.enable()
           .then(() => {
             resolve(
@@ -38,6 +41,16 @@ class App extends Component {
       window.location.reload();
     });
   }
+  getUser = async () => {
+    const organizer = await this.web3.eth.getCoinbase();
+    console.log('organizer', this.web3);
+    this.setState({organizer: organizer.substr(0, 7) + "..."});
+    return organizer;
+  }
+
+  componentDidMount() {
+    this.getUser();
+  }
 
   render() {
     return (
@@ -55,6 +68,7 @@ class App extends Component {
                   <li> <Link to="/market">Secondary Market</Link> </li>
                   <li> <Link to="/tickets">My Tickets</Link> </li>
                   <li >
+                    You're logged in: {this.state.organizer}
                   </li>
                 </div>
 

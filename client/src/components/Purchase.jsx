@@ -61,7 +61,7 @@ class Purchase extends Component {
       renderNotification('success', 'Success', `Ticket for the Festival purchased successfully!`);
     } catch (err) {
       console.log('Error while creating new festival', err);
-      renderNotification('danger', 'Error', err.message);
+      renderNotification('danger', 'Error during purchasing', err.message);
     }
   }
 

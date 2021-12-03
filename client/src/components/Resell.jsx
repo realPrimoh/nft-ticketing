@@ -38,8 +38,9 @@ class MyTickets extends Component {
     this.setState({ fest: festID, festName:  festDetails[0], ticketID: ticketID, ticket: ticketID, marketplace: festDetails[6]});
   }
 
-  onListForSale = async () => {
+  onListForSale = async (e) => {
     try {
+      e.preventDefault()
       const initiator = await web3.eth.getCoinbase();
       const { ticket, price, marketplace } = this.state;
       const nftInstance = await FestivalNFT(this.state.fest);

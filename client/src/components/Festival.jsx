@@ -39,7 +39,7 @@ class Festival extends Component {
         scalp_protection
       ).send({ from: organiser, gas: 6700000 });
 
-      renderNotification('success', 'Success', `Festival Created Successfully!`);
+      renderNotification('success', 'Success', `Event Created Successfully!`);
 
       const nftInstance = await FestivalNFT(ntfAddress);
       const batches = Math.ceil(supply / 30);

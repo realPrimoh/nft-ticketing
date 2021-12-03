@@ -52,7 +52,7 @@ class SecondaryMarket extends Component {
               <td class="center">{ticketId}</td>
               <td class="center">{web3.utils.fromWei(sellingPrice, 'ether')}</td>
 
-              <td class="center"><a class="center" onClick={this.onPurchaseTicket.bind(this, ticketId, sellingPrice, initiator)}>Buy Now</a></td>
+              <td class="center"><button class="center" onClick={this.onPurchaseTicket.bind(this, ticketId, sellingPrice, initiator)}>Buy Now</button></td>
             </tr>
           );
         }
@@ -96,7 +96,7 @@ class SecondaryMarket extends Component {
         )
       }));
 
-      this.setState({ fests: renderData, fest: activeFests[0], marketplace: festDetails[4], festName: festDetails[0] });
+      this.setState({ fests: renderData, fest: activeFests[0], marketplace: festDetails[6], festName: festDetails[0] });
     } catch (err) {
       renderNotification('danger', 'Error', 'Error while updating the events');
       console.log('Error while updating the fetivals', err);
@@ -112,7 +112,7 @@ class SecondaryMarket extends Component {
     const initiator = await web3.eth.getCoinbase();
     const festDetails = await festivalFactory.methods.getFestDetails(fest).call({ from: initiator });
 
-    this.setState({ marketplace: festDetails[4] });
+    this.setState({ marketplace: festDetails[6] });
     await this.updateTickets();
   }
 

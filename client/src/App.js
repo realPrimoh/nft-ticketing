@@ -6,6 +6,7 @@ import Festival from './components/Festival';
 import Purchase from './components/Purchase';
 import MyTickets from './components/MyTickets';
 import SecondaryMarket from './components/SecondaryMarket';
+import Resell from './components/Resell';
 
 class App extends Component {
 
@@ -79,6 +80,7 @@ class App extends Component {
             <Route path="/buyTickets" component={Purchase} />
             <Route path="/resale" component={SecondaryMarket} />
             <Route path="/tickets" component={MyTickets} />
+            <Route path="/resell" component={Resell} />
           </Switch>
         </div>
 

@@ -126,49 +126,24 @@ class MyTickets extends Component {
         <div class="row">
           <div class="container ">
             <div class="container ">
-              <h5 style={{ padding: "30px 0px 0px 10px" }}>My Tickets</h5>
-              <table id='requests' class="responsive-table striped" style={{marginBottom: 30}}>
-                <thead>
-                  <tr>
-                    <th key='name' class="center">Event Name</th>
-                    <th key='left' class="center">Ticket ID</th>
-                    {/* <th key='price' class="center">Listing Price</th> */}
-                    <th key='purchase' class="center">Actions</th>
-                  </tr>
-                </thead>
-                <tbody class="striped highlight">
-                  {this.state.festData.map((festList) => {
-                    return(
-                    <tr>
-                      <th class="center">{festList[0]}</th>
-                      <th class="center">{festList[1]}</th>
-                      {/* <th class="center"><input id="price" placeholder="Sale Price" type="text" className="input-control" name="price" onChange={this.inputChangedHandler} /></th> */}
-                      {/* <th class="center"><button onClick={() => alert('selling!')} className="custom-btn login-btn">Resell</button></th> */}
-                      <th class="center"><Link to="/resell">Resell</Link></th>
-
-                    </tr>)
-                  })}
-                  {console.log('festNames', this.state.festNames)}
-                </tbody>
-              </table>
-              {/* <form class="" onSubmit={this.onListForSale}>
+              <h5 style={{ padding: "30px 0px 0px 10px" }}>Resell Ticket</h5>
+              <form class="" onSubmit={this.onListForSale}>
 
                 <label class="left">Festival</label>
                 <select className="browser-default" name='fest' value={this.state.fest || undefined} onChange={this.onFestivalChangeHandler}>
-                  <option value="" disabled >Select Festival</option>
+                  <option value="" disabled >Select Event</option>
                   {this.state.fests}
                 </select><br /><br />
 
-                <label class="left">Ticket Id</label>
+                <label class="left">Ticket ID</label>
                 <select className="browser-default" name='ticket' value={this.state.ticket || undefined} onChange={this.selectHandler}>
                   <option value="" disabled>Select Ticket</option>
                   {this.state.tickets}
                 </select><br /><br />
 
                 <label class="left">Sale Price</label><input id="price" placeholder="Sale Price" type="text" className="input-control" name="price" onChange={this.inputChangedHandler} /><br /><br />
-
                 <button type="submit" className="custom-btn login-btn">List for Sale</button>
-              </form> */}
+              </form>
             </div>
           </div>
         </div>

@@ -149,7 +149,13 @@ class SecondaryMarket extends Component {
                   </tr>
                 </thead>
                 <tbody class="striped highlight">
-                  {this.state.renderTickets}
+                <tr>
+                    <th key='name' class="center">Coachella</th>
+                    <th key='ticketId' class="center">1</th>
+                    <th key='cost' class="center">550</th>
+                    <th key='purchase' class="center"><a>Buy Now</a></th>
+                  </tr>
+                  {/* {this.state.renderTickets} */}
                 </tbody>
               </table>
 

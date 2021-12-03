@@ -10,6 +10,8 @@ contract FestiveTicketsFactory is Ownable {
         string festSymbol;
         uint256 ticketPrice;
         uint256 totalSupply;
+        uint256 commission;
+        uint256 maxSell;
         address marketplace;
     }
 
@@ -50,6 +52,8 @@ contract FestiveTicketsFactory is Ownable {
             festSymbol: festSymbol,
             ticketPrice: ticketPrice,
             totalSupply: totalSupply,
+            commission: commission,
+            maxSell: maxSell,
             marketplace: address(newMarketplace)
         });
 
@@ -72,6 +76,8 @@ contract FestiveTicketsFactory is Ownable {
             string memory,
             uint256,
             uint256,
+            uint256,
+            uint256,
             address
         )
     {
@@ -80,6 +86,8 @@ contract FestiveTicketsFactory is Ownable {
             activeFestsMapping[festAddress].festSymbol,
             activeFestsMapping[festAddress].ticketPrice,
             activeFestsMapping[festAddress].totalSupply,
+            activeFestsMapping[festAddress].commission,
+            activeFestsMapping[festAddress].maxSell,
             activeFestsMapping[festAddress].marketplace
         );
     }

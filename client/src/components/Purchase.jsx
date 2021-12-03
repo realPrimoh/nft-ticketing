@@ -29,7 +29,9 @@ class Purchase extends Component {
       const activeFests = await festivalFactory.methods.getActiveFests().call({ from: initiator });
       const fests = await Promise.all(activeFests.map(async fest => {
         const festDetails = await festivalFactory.methods.getFestDetails(fest).call({ from: initiator });
-        const [festName, festSymbol, ticketPrice, totalSupply, marketplace] = Object.values(festDetails);
+        const [festName, festSymbol, ticketPrice, totalSupply, commission, maxSell, marketplace] = Object.values(festDetails);
+        let maxResale = new web3.utils.BN((new web3.utils.BN(ticketPrice).mul(new web3.utils.BN(maxSell))));
+        console.log('type of ticketPrice',  typeof maxResale);
         const nftInstance = await FestivalNFT(fest);
         const saleId = await nftInstance.methods.getNextSaleTicketId().call({ from: initiator });
 
@@ -38,7 +40,8 @@ class Purchase extends Component {
             <td class="center">{festName}</td>
             <td class="center">{web3.utils.fromWei(ticketPrice, 'ether')}</td>
             <td class="center">{totalSupply - saleId}</td>
-
+            <td class="center">{commission}%</td>
+            <td class="center">{web3.utils.fromWei(maxResale, 'ether')/100}</td>
             <td class="center"><button type="submit" className="custom-btn login-btn" onClick={this.onPurchaseTicket.bind(this, marketplace, ticketPrice, initiator)}>Buy</button></td>
           </tr>
         );
@@ -47,20 +50,24 @@ class Purchase extends Component {
       this.setState({ festivals: fests });
     } catch (err) {
       renderNotification('danger', 'Error', err.message);
-      console.log('Error while updating the fetivals', err);
+      console.log('Error while updating the events', err);
     }
   }
 
   onPurchaseTicket = async (marketplace, ticketPrice, initiator) => {
+    console.log('initiator', initiator);
+    console.log('ticketPrice', ticketPrice);
+    console.log('marketplace', marketplace);
+
     try {
       const marketplaceInstance = await FestivalMarketplace(marketplace);
       await festToken.methods.approve(marketplace, ticketPrice).send({ from: initiator, gas: 6700000 });
       await marketplaceInstance.methods.purchaseTicket().send({ from: initiator, gas: 6700000 });
       await this.updateFestivals();
 
-      renderNotification('success', 'Success', `Ticket for the Festival purchased successfully!`);
+      renderNotification('success', 'Success', `Ticket for the Event purchased successfully!`);
     } catch (err) {
-      console.log('Error while creating new festival', err);
+      console.log('Error while creating new event', err);
       renderNotification('danger', 'Error during purchasing', err.message);
     }
   }
@@ -81,6 +88,8 @@ class Purchase extends Component {
               <th key='name' class="center">Name</th>
               <th key='price' class="center">Price ($TCKT)</th>
               <th key='left' class="center">Tickets Left</th>
+              <th key='left' class="center">Resale Fee</th>
+              <th key='left' class="center">Max Resale Price</th>
               <th key='purchase' class="center">Purchase</th>
             </tr>
           </thead>

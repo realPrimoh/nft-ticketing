@@ -51,7 +51,7 @@ class App extends Component {
                 <a href="/buyTickets" class="brand-logo left">NFTicketmaster</a>
                 <ul class="right hide-on-med-and-down 10" >
                   <div>
-                    <li> <Link to="/createFestival">Add Festival</Link> </li>
+                    <li> <Link to="/createFestival">Create Event</Link> </li>
                     <li> <Link to="/buyTickets">Buy Tickets</Link> </li>
                     <li> <Link to="/market">Secondary Market</Link> </li>
                     <li> <Link to="/tickets">My Tickets</Link> </li>

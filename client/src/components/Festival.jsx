@@ -77,12 +77,12 @@ class Festival extends Component {
     return (
       <div class="container center" >
           <div class="container" style={{backgroundColor: '#F5F8FA', backgroundOpacity: 0.5, marginTop: 40, boxShadow: '0px 10px 10px #888888', width: '50%', border: '1px solid black', padding: 30, paddingTop: 20, borderRadius: 10}}>
-            <Text fontSize='4xl' padding={18}>Add New Festival</Text>
-            {this.state.name && <Text mb='8px'>Festival Name</Text>}
-              <Input style={styles.input} placeholder='Festival Name' value={this.state.name} onChange={(event) => this.setState({name: event.target.value})} />
+            <Text fontSize='4xl' padding={18}>Create New Event</Text>
+            {this.state.name && <Text mb='8px'>Event Name</Text>}
+              <Input style={styles.input} placeholder='Event Name' value={this.state.name} onChange={(event) => this.setState({name: event.target.value})} />
 
-              {this.state.symbol && <Text mb='8px'>Festival Ticker Symbol</Text>}
-              <Input style={styles.input} placeholder='Festival Ticker Symbol' value={this.state.symbol}  onChange={(event) => this.setState({symbol: event.target.value})} />
+              {this.state.symbol && <Text mb='8px'>Event Ticker Symbol</Text>}
+              <Input style={styles.input} placeholder='Event Ticker Symbol' value={this.state.symbol}  onChange={(event) => this.setState({symbol: event.target.value})} />
 
               {this.state.price && <Text mb='8px'>Ticket Price</Text>}
               <Input style={styles.input} placeholder='Ticket Price' value={this.state.price}  onChange={(event) => this.setState({price: event.target.value})} />
@@ -95,8 +95,8 @@ class Festival extends Component {
 
               {this.state.scalp_protection && <Text mb='8px'>Maximum Resale Price (%)</Text>}
               <Input style={styles.input} placeholder='Maximum Resale Price (%)' value={this.state.scalp_protection}  onChange={(event) => this.setState({scalp_protection: event.target.value})} />
-              <Button colorScheme='teal' size='lg' marginTop={10} onClick={(e) => this.onCreateFestival(e)}>
-                Add Festival
+              <Button colorScheme='teal' size='lg' marginTop={-2} onClick={(e) => this.onCreateFestival(e)}>
+                Create New Event
               </Button>
           </div>
       </div >

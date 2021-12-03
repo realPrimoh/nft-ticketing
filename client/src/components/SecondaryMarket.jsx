@@ -45,13 +45,14 @@ class SecondaryMarket extends Component {
         const [festName] = Object.values(festDetails);
 
         if (forSale) {
+          console.log('fest name', festName)
           return (
             <tr key={ticketId}>
               <td class="center">{festName}</td>
               <td class="center">{ticketId}</td>
               <td class="center">{web3.utils.fromWei(sellingPrice, 'ether')}</td>
 
-              <td class="center"><button type="submit" className="custom-btn login-btn" onClick={this.onPurchaseTicket.bind(this, ticketId, sellingPrice, initiator)}>Buy</button></td>
+              <td class="center"><a class="center" onClick={this.onPurchaseTicket.bind(this, ticketId, sellingPrice, initiator)}>Buy Now</a></td>
             </tr>
           );
         }
@@ -129,7 +130,7 @@ class SecondaryMarket extends Component {
           <div class="container ">
             <div class="container ">
 
-              <h5 style={{ padding: "30px 0px 0px 10px" }}>Ticket Resales</h5>
+              <h3 style={{ padding: "30px 0px 0px 10px" }}>Ticket Resales</h3>
 
               <label class="left">Event</label>
               <select className="browser-default" name='fest' value={this.state.fest || undefined} onChange={this.onFestivalChangeHandler}>
@@ -137,9 +138,9 @@ class SecondaryMarket extends Component {
                 {this.state.fests}
               </select><br /><br />
 
-              <h4 class="center">Purchase Tickets</h4>
+              {this.state.renderTickets?.length > 0 ? <h4 class="center">Purchase Tickets</h4> : null}
 
-              <table id='requests' class="responsive-table striped" >
+              {this.state.renderTickets?.length > 0 ? (<table id='requests' class="responsive-table striped" >
                 <thead>
                   <tr>
                     <th key='name' class="center">Event Name</th>
@@ -149,15 +150,18 @@ class SecondaryMarket extends Component {
                   </tr>
                 </thead>
                 <tbody class="striped highlight">
-                <tr>
+                {/* <tr>
                     <th key='name' class="center">Coachella</th>
                     <th key='ticketId' class="center">1</th>
                     <th key='cost' class="center">550</th>
-                    <th key='purchase' class="center"><a>Buy Now</a></th>
-                  </tr>
-                  {/* {this.state.renderTickets} */}
+                    <th key='purchase' class="center"><a onClick={() => alert('Purchase?')}>Buy Now</a></th>
+                  </tr> */}
+                  {this.state.renderTickets}
+                  
                 </tbody>
-              </table>
+              </table>) : (<div class="center">
+                    <h4>No Tickets Available</h4>
+                    </div>)}
 
             </div>
           </div>

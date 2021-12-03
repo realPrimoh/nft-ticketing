@@ -31,7 +31,6 @@ class Purchase extends Component {
         const festDetails = await festivalFactory.methods.getFestDetails(fest).call({ from: initiator });
         const [festName, festSymbol, ticketPrice, totalSupply, commission, maxSell, marketplace] = Object.values(festDetails);
         let maxResale = new web3.utils.BN((new web3.utils.BN(ticketPrice).mul(new web3.utils.BN(maxSell))));
-        console.log('type of ticketPrice',  typeof maxResale);
         const nftInstance = await FestivalNFT(fest);
         const saleId = await nftInstance.methods.getNextSaleTicketId().call({ from: initiator });
 
@@ -55,9 +54,6 @@ class Purchase extends Component {
   }
 
   onPurchaseTicket = async (marketplace, ticketPrice, initiator) => {
-    console.log('initiator', initiator);
-    console.log('ticketPrice', ticketPrice);
-    console.log('marketplace', marketplace);
 
     try {
       const marketplaceInstance = await FestivalMarketplace(marketplace);

@@ -1,56 +1,42 @@
-# NFT Ticketing
+# NFTicketing
+
+### Introduction
+This is a project completed by Rohan Hajela, Priyam Mohanty, Kshitij Kulkarni, and Aditya Ganapathi for CS294-177's final DEFI project.
 
 ### Overview 
-An end-to-end blockchain based platform for event ticket booking and ticket reselling between trustless parties. This will help to eliminate the current issue with the fake tickets and uncontrolled resale price for the tickets in black market. The platform is build on public Ethereum blockchain network where ERC721 tokens represent festival tickets and these tickets can be purchased using a platform based ERC20 token called FEST.
+Our project is to create a Ticketing Platform for events that leverages NFTs to create a more secure and decentralized ecosystem for ticket purchasing and resale. We envision a StubHub style platform where event organizers can create events and tickets, users can buy/sell tickets both in the primary and secondary market. By incorporating the NFT aspect into our design, we should be able to have a more secure ticket verification system that will not be vulnerable to scammers or scalpers. Through our project we were able to create a successful prototype of the NFTicketing platform that accomplishes these core functions: 
 
+* Creation of Events
+* Purchase of Event Tickets
+* Reselling of Event Tickets
+* Commission for Sale in Secondary Markets
+* Scalp Protection of Events
+* Verified Ticket Display 
+* Attaching Memorabilia
 
 ### Credit
-Credit for most of this repo goes to: https://github.com/ashleshsortee/festival-marketplace/
+Credit for the bootstrap of this repo goes to: https://github.com/ashleshsortee/festival-marketplace/
 
-### Functionality
-1. An organiser can create a new fest for ticket distribution with specified ticket price and the total supply of tickets for the sale.
-2. Once the festival is hosted on the platform, the customers have ablility to purchase the tickets directly from the organiser.
-3. The customer can view the tickets they own for the available festival.
-4. The customer have ability to sell the tickets they own either via the secondary market or directly to the peer customer, but the price at which customer can sell the ticket can not be more than 110% of the purchase price.
-5. Tickets being sold through the secondary market adds a commission of 10% to the organiser which is deducted from the selling price the seller has listed.
+### Feature Overview
+1. Event creater can create an event with a ticket price, total supply, a desired commission, and a max scalp limit.
+2. Customers can view all created events via the web portal and make purchases, both through the primary and secondary market.
+3. Customers can view all their tickets for any event which is validated to be a legitimate NFT ticket for the event.
+4. Customers can resell their owned tickets on secondary market, but at no more than the max scalp limit, and all resales are charged a comission based on what organizer filled for the event. (ie. Ticket costs 150 TCKT from the market, Max Scalp = 200%, Commission = 15% then someone can resale their ticket for anything less than 300 TCKT, and so if they sell it for 250 TCKT, the commission of 37.5 TCKT is sent to the organizer.
+5. Event organizers can attach memorabilia to tickets and via the UI users can view the memorabila they were airdropped (UI display pending)
 
 ### Technical Details
 ##### Smart Contract
 Mainly 4 contracts listed under `./contracts` directory.
 1. **FestToken** - 
-    1. A contract for ERC20 token called FEST which is used to purchase tickets.
+    1. A contract for ERC20 token called TCKT which is used to purchase tickets.
 2. **FestivalNFT** - 
-    1. A contract for ERC721 tokens to represent festival tickets.
+    1. A contract for ERC721 tokens to represent event tickets.
     2. The owner of the contract will also have minter role and only the owner can mint new tickets.
 3. **FestivalMarketplace** - 
-    1. A contract which acts as a marketplace for purchasing tickets from organiser and through secondary market.
-    2. This contract will act as a delegate approver for the FEST token as well as NFT token transfers.
+    1. A contract which acts as a marketplace for purchasing tickets from organizer and through secondary market.
+    2. This contract will act as a delegate approver for the TCKT token as well as NFT token transfers.
 4. **FestiveTicketsFactory** - 
     1. A contract which implements a factory pattern with FestivalNFT contract to create new festivals on the fly.
-
-##### React application
-Listed under `./client` directory.
-1. All the react components are listed under `./client/src/components` directory.
-2. All the smart contract instance creation are listed under `./client/src/proxies` which implements singleton pattern.
-
-#### How it works?
-
-###### Creating new festival
-1. The organiser creates a new festival by minting tickets using `bulkMintTickets()` of `FestivalNFT` smart contract. The minted tickets are assigned to `FestivalMarketplace` smart contract.
-
-###### Purchase tickets from organiser
-1. When customer initiates purchase from organiser, the application first sets the ticket price as the allowance of `FestivalMarketplace` contract for the customer's FEST tokens. 
-2. Then the application initiates the `purchaseTicket()` of `FestivalMarketplace` contract which transfers the FEST tokens from customer to the organiser and then transfers the next sale ticket from `FestivalMarketplace` contract to the customer.
-
-###### Selling tickets on secondary market
-1. When customer wish to list ticket for sale on secondary market of the platform, the application initiates the `setSaleDetails()` of `FestivalNFT` contract which gives permission to `FestivalMarketplace` contract to transfer ticket token to the customer who will be purchasing the ticket.
-
-###### Purchasing tickets from secondary market
-1. When customer initiates purchase from secondary market, the application first sets the ticket selling price as the allowance of `FestivalMarketplace` contract for the customer's FEST tokens. 
-2. Then the applicaiton initiates the `secondaryPurchase()` of `FestivalMarketplace` contract which transfers the 10% commission as FEST tokens from customer to the organiser and rest amount to the seller and transfers the ticket token from seller to buyer.
-
-###### Selling tickets peer to peer
-1. When customer wish to sell the ticket directly to another customer, the customer has to initiates `secondaryTransferTicket()` of `FestivalNFT` contract which restricts the customer from transfering ticket if the selling price is higher than 110%.
 
 ### Running the application
 ##### Prerequisite
@@ -65,35 +51,22 @@ Listed under `./client` directory.
     docker-compose up --build
     ```
 4. Note down first couple of private keys from the output logs.
-5. Note down the FestToken contract address.
+5. Note down the TCKT contract address.
 4. Run the below command from `./client` directory to run the react application.
     ```sh
     docker-compose up --build
     ```
 5. React application will be accessible at `http://localhost:3000/`.
 6. Configure the Metamask with RPC url `http://0.0.0:8545`.
-7. Import the accounts in the metamask by taking 1st private key from step 4 and setting it as an organiser. Add couple more accounts in metamask to act as a customers.
-8. Add new FEST token in metamask using the contract address from step 5.
-9. Transfer some amount of FEST tokens from organiser to other cutomers using metamask for testing the application.
-10. Set up is completed and now the organiser account will be able to add new festival and customers will be able to purchase/sell the tickets.
+7. Import the accounts in the metamask by taking 1st private key from step 4 and setting it as an organizer. Add couple more accounts in metamask to act as a customers.
+8. Add new TCKT token in metamask using the contract address from step 5.
+9. Transfer some amount of TCKT tokens from organizer to other cutomers using metamask for testing the application.
+10. Set up is completed and now the organizer account will be able to add new festival and customers will be able to purchase/sell the tickets.
 
 
-#### Feature debt
-1. Add one click login option using metamask and add public and private routes.
-2. Add option to burn the ERC721 token during check in.
-3. Add option to withdraw tickets from sale.
-4. Be able to switch between accounts (customer account can't buy ticket)
-
-
-#### Tech debt
-1. Add clone factory pattern (ERC1167 implementation) for the FestiveTicketsFactory smart contract which uses delegate calls to save the gas cost for the contract deployment.
-2. Reduce the gas consumption for the the bulk minting of tickets. Once solution to do is to modify the openzeppelin's ERC721 contract such that its constructor will be able to directly initialize the required values to its state variables instead of updating the state variable again and again which consumes more gas than operating on memory.
-3. Add unit test cases covering all the scenarios.
-
-
-### Screenshots
-
-![Create Festival](./screenshots/create-festival.png)
-![Purchase Ticket](./screenshots/purchase-ticket.png)
-![Resale Ticket](./screenshots/resale-error.png)
-![Secondary Market](./screenshots/secondary-market.png)
+#### Future Steps
+1. We were able to setup code on the backend of solidity to handle memorabilia attachments, but due to some bugs and time delay we did not add the UI for users to be able to see the attachments. 
+2. On the back end we want to create more analytics and overall data views for us at the owners of NFTicketing to see flow and transactions on the site.
+3. There are slight bugs that have to do with input formatting so we would like to clean that up.
+4. We would like to optimize our functions to limit gas costs, and set up a way to handle ticket transfers within the site wtih no gas cost.
+5. We made an overall to the base UI to make the experience more clear, so further development and improvements there would continue helping the user experience. 
